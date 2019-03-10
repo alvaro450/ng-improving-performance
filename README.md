@@ -1,2 +1,4 @@
 # ng-improving-performance
-Improve performance of an Angular application: 
+In this application we can examined how to improve both Load & Runtime performance. 
+
+
