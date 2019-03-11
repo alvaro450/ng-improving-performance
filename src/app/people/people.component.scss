@@ -1,0 +1,22 @@
+:host {
+    height: 500px;
+    overflow-y: scroll;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    
+    .person {
+        width: 400px;
+        border: 1px solid lightgray;
+        margin: 10px;
+        border-radius: 5px;
+        padding: 5px;
+        box-shadow: 0 3px 4px rgba(0, 0, 0, 0.4);
+    
+        .header {
+            border-bottom: 1px lightgrey solid;
+            margin-bottom: 10px;
+        }
+    }
+}

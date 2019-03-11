@@ -1,0 +1,18 @@
+
+<div class="person" *ngFor="let person of people" [@personAnimation]="'in'">
+  <div class="header">
+    {{ person.firstName }} {{ person.lastName }}
+  </div>
+  <div class="content">
+    <div> {{ person.profile?.jobTitle }}, {{ person.profile?.company}}</div>
+    <div> {{ person.profile?.skill }}, {{ person.profile?.department}}</div>
+  </div>
+  <div class="footer">
+    <div>
+      {{ person.language }}
+    </div>
+    <div>
+      Timestamp: {{ getDate() }}
+    </div>
+  </div>
+</div>
