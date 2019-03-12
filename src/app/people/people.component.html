@@ -1,18 +1,21 @@
-
-<div class="person" *ngFor="let person of people" [@personAnimation]="'in'">
-  <div class="header">
-    {{ person.firstName }} {{ person.lastName }}
-  </div>
-  <div class="content">
-    <div> {{ person.profile?.jobTitle }}, {{ person.profile?.company}}</div>
-    <div> {{ person.profile?.skill }}, {{ person.profile?.department}}</div>
-  </div>
-  <div class="footer">
-    <div>
-      {{ person.language }}
+<form [formGroup]="searchFormGroup" class="people-search--container">
+    <div class="people-search--count">People Count: {{ people.length }}</div>
+    <input class="people-search--field" type="search" formControlName="search" placeholder="Search by first or last name" />
+    <button type="button" (click)="reset()">Reset</button>
+</form>
+<div class="people--container">
+  <div class="person" *ngFor="let person of people" [@personAnimation]="'in'">
+    <div class="header">
+      {{ getName(person) }}
     </div>
-    <div>
-      Timestamp: {{ getDate() }}
+    <div class="content">
+      <div> {{ person.profile?.jobTitle }}, {{ person.profile?.company}}</div>
+      <div> {{ person.profile?.skill }}, {{ person.profile?.department}}</div>
+    </div>
+    <div class="footer">
+      <div>
+        {{ person.language }}
+      </div>
     </div>
   </div>
 </div>

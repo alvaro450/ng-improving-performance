@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { PEOPLE, Person } from './people';
 import {
   trigger,
@@ -8,6 +8,8 @@ import {
   transition
   // ...
 } from '@angular/animations';
+import { FormGroup, AbstractControl, FormBuilder } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-people',
@@ -25,16 +27,51 @@ import {
     ])
   ]
 })
-export class PeopleComponent implements OnInit {
+export class PeopleComponent implements OnInit, OnDestroy {
   people: Array<Person>;
+  searchFormGroup: FormGroup;
+  searchControl: AbstractControl;
+  subscriptions: Subscription = new Subscription();
 
-  constructor() {}
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.people = PEOPLE;
+
+    this.searchFormGroup = this.fb.group({
+      search: ['']
+    });
+
+    this.searchControl = this.searchFormGroup.get('search');
+
+    const searchSubscription = this.searchControl.valueChanges.pipe().subscribe((searchValue: string) => {
+      const searchBy = !!searchValue ? searchValue.toLowerCase() : null;
+
+      // on clear, reset the collection
+      if (searchBy === null) {
+          this.people = [...PEOPLE];
+      } else {
+        this.people = PEOPLE.filter(p => {
+          return p.firstName.toLowerCase().includes(searchBy) || p.lastName.toLowerCase().includes(searchBy);
+        });
+      }
+    });
+
+    this.subscriptions.add(searchSubscription);
+
   }
 
-  getDate() {
-    return Date.now();
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
+  getName(person: Person) {
+    const name =  `${person.firstName} ${person.lastName}`;
+    console.log(`getName: ${name}, id: ${person.id}`);
+    return `${name}`;
+  }
+
+  reset() {
+    this.searchControl.reset();
   }
 }
