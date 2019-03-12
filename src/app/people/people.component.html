@@ -2,11 +2,12 @@
     <div class="people-search--count">People Count: {{ people.length }}</div>
     <input class="people-search--field" type="search" formControlName="search" placeholder="Search by first or last name" />
     <button type="button" (click)="reset()">Reset</button>
+    <button type="button" (click)="updateFirst()">Update First</button>
 </form>
 <div class="people--container">
-  <div class="person" *ngFor="let person of people" [@personAnimation]="'in'">
+  <div class="person" *ngFor="let person of people; trackBy: trackById" >
     <div class="header">
-      {{ getName(person) }}
+      {{ person.firstName | name: person.lastName }}
     </div>
     <div class="content">
       <div> {{ person.profile?.jobTitle }}, {{ person.profile?.company}}</div>
